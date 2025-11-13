@@ -1,26 +1,240 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0e1f;
+  --foreground: #dcdff2;
+  
+  /* Design tokens from Figma */
+  --color-h2: #a5aee9;
+  --color-h1: #dcdff2;
+  --color-bg-primary: #171c39;
+  --color-bg-hero: #1d2241;
+  --color-border: #3f4367;
+  --color-border-light: #c1c7cd;
+  --color-button-from: #323966;
+  --color-button-to: #232b5c;
+  --color-button-border: #8c99eb;
+  --color-text-secondary: #a5aee9;
+  --color-bg-20: #dde1e6;
+  --color-bg-30: #c1c7cd;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-roboto);
+  
+  /* Hero section colors */
+  --color-hero-bg: var(--color-bg-hero);
+  --color-hero-text: var(--color-text-secondary);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto), system-ui, sans-serif;
+}
+
+/* Hero Section Styles */
+.hero-gradient-text {
+  background: linear-gradient(to top right, #ffffff 0%, #7B89DF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-button {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Font Variation Settings */
+.font-variation-100 {
+  font-variation-settings: 'wdth' 100;
+}
+
+/* Cal.com Embed Styling - Match Brand Design System */
+.cal-embed,
+.cal-embed-inline,
+.cal-embed-fallback {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Cal.com iframe styling */
+.cal-embed-fallback {
+  background: #171c39;
+}
+
+/* Target Cal.com's internal classes via iframe content styling */
+/* Note: Direct CSS targeting of iframe content requires the iframe to be same-origin */
+/* For cross-origin iframes, we'll style the container and use CSS variables */
+
+/* Cal.com embed container styling */
+.cal-embed {
+  background: #171c39;
+  border: 1px solid #3f4367;
+}
+
+/* Style Cal.com elements that are accessible */
+.cal-embed * {
+  color-scheme: dark;
+}
+
+/* Hide Cal.com branding - target common branding elements */
+.cal-embed [class*="branding"],
+.cal-embed [class*="powered"],
+.cal-embed [class*="cal.com"],
+.cal-embed a[href*="cal.com"],
+.cal-embed a[href*="calendly"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Target text that says "Cal.com" */
+.cal-embed-inline::after {
+  display: none !important;
+}
+
+/* Hide any footer/branding areas */
+.cal-embed footer,
+.cal-embed [class*="footer"],
+.cal-embed [class*="brand"],
+.cal-embed [data-testid*="brand"],
+.cal-embed [data-testid*="powered"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Iframe wrapper styling */
+.cal-embed-fallback {
+  background-color: #171c39;
+}
+
+/* Additional Cal.com styling overrides */
+/* These will target elements that Cal.com creates within the embed */
+.cal-embed iframe {
+  background: #171c39 !important;
+  border: 1px solid #3f4367 !important;
+  border-radius: 8px !important;
+}
+
+/* Cal.com theme variables - attempt to override via CSS custom properties */
+[data-cal-theme] {
+  --cal-bg: #171c39;
+  --cal-text: #dcdff2;
+  --cal-text-emphasis: #a5aee9;
+  --cal-border: #3f4367;
+  --cal-border-subtle: #3f4367;
+  --cal-brand: #8c99eb;
+  --cal-brand-emphasis: #ff885d;
+  --cal-brand-text: #c9d1ff;
+  --cal-brand-subtle: #323966;
+}
+
+/* Cal.com button styling overrides */
+.cal-embed button,
+.cal-embed [role="button"] {
+  background: linear-gradient(to right, #323966, #232b5c) !important;
+  border: 1px solid #8c99eb !important;
+  color: #c9d1ff !important;
+  border-radius: 4px !important;
+}
+
+.cal-embed button:hover,
+.cal-embed [role="button"]:hover {
+  background: linear-gradient(to right, #3a4170, #2a3467) !important;
+  border-color: #8c99eb !important;
+}
+
+/* Cal.com input field styling */
+.cal-embed input,
+.cal-embed textarea,
+.cal-embed select {
+  background: #1d2241 !important;
+  border: 1px solid #3f4367 !important;
+  color: #dcdff2 !important;
+}
+
+.cal-embed input:focus,
+.cal-embed textarea:focus,
+.cal-embed select:focus {
+  border-color: #8c99eb !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(140, 153, 235, 0.2) !important;
+}
+
+/* Cal.com calendar cell styling */
+.cal-embed [data-testid="day"],
+.cal-embed [data-testid="time-slot"] {
+  color: #a5aee9 !important;
+  border-color: #3f4367 !important;
+}
+
+.cal-embed [data-testid="day"]:hover,
+.cal-embed [data-testid="time-slot"]:hover {
+  background: #232b5c !important;
+  border-color: #8c99eb !important;
+  color: #dcdff2 !important;
+}
+
+/* Cal.com selected/today styling */
+.cal-embed [data-selected="true"],
+.cal-embed [aria-selected="true"] {
+  background: linear-gradient(to right, #323966, #232b5c) !important;
+  border-color: #8c99eb !important;
+  color: #c9d1ff !important;
+}
+
+/* Cal.com text styling */
+.cal-embed h1,
+.cal-embed h2,
+.cal-embed h3,
+.cal-embed h4,
+.cal-embed h5,
+.cal-embed h6 {
+  color: #dcdff2 !important;
+}
+
+.cal-embed p,
+.cal-embed span,
+.cal-embed div {
+  color: #a5aee9 !important;
+}
+
+/* Cal.com link styling */
+.cal-embed a {
+  color: #8c99eb !important;
+}
+
+.cal-embed a:hover {
+  color: #c9d1ff !important;
+}
+
+/* Cal.com card/container backgrounds */
+.cal-embed [class*="card"],
+.cal-embed [class*="container"],
+.cal-embed [class*="box"] {
+  background: #171c39 !important;
+  border-color: #3f4367 !important;
+}
+
+/* Responsive adjustments for Cal.com embed */
+@media (max-width: 768px) {
+  .cal-embed,
+  .cal-embed-fallback {
+    min-height: 600px;
+  }
+}
+
+@media (min-width: 769px) {
+  .cal-embed,
+  .cal-embed-fallback {
+    min-height: 800px;
+  }
 }
