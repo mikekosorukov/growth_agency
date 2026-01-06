@@ -43,6 +43,10 @@ body {
   background-clip: text;
 }
 
+.hero-section-bg {
+  background-color: #171c39;
+}
+
 .hero-button {
   position: relative;
   overflow: hidden;
@@ -51,6 +55,112 @@ body {
 /* Font Variation Settings */
 .font-variation-100 {
   font-variation-settings: 'wdth' 100;
+}
+
+/* Dot Pattern Background */
+.dot-pattern-bg {
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.dot-pattern-bg:hover {
+  transform: translateY(-8px);
+  border-color: #5f6387;
+}
+
+.dot-pattern-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/Dots-Pattern-2.svg');
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dot-pattern-bg:hover::before {
+  opacity: 0.50;
+}
+
+/* Media Container Inner Animation */
+.media-inner-container {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dot-pattern-bg:hover .media-inner-container {
+  transform: scale(0.985);
+  box-shadow: 0 0 8px 0 rgba(13, 16, 38, 0.9);
+}
+
+/* Play Icon Animation */
+.play-icon-container {
+  transition: transform 0.3s ease;
+}
+
+.dot-pattern-bg:hover .play-icon-container {
+  transform: scale(1.1);
+  animation: flowGradient 3s ease-in-out infinite;
+}
+
+@keyframes flowGradient {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  25% {
+    filter: brightness(1.08);
+  }
+  50% {
+    filter: brightness(1.15);
+  }
+  75% {
+    filter: brightness(1.08);
+  }
+}
+
+/* About Section Background Pattern */
+.about-section-bg {
+  background-color: #1d2241;
+  background-image: url('/dots-pattern-6.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Booking Section Background Pattern */
+.booking-section-bg {
+  background-color: #171c39;
+  background-image: url('/dots-pattern-5.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Inner Container Dots Pattern */
+.inner-dots-pattern {
+  position: relative;
+}
+
+.inner-dots-pattern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/Dots-Pattern-4.svg');
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.17;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Notification Styles */
+.notification-container {
+  border-left: 3px solid #ff885d;
+  border-radius: 0;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.5);
 }
 
 /* Cal.com Embed Styling - Match Brand Design System */

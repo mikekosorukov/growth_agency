@@ -1,0 +1,32 @@
+<svg width="1440" height="634" viewBox="0 0 1440 634" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<filter id="blobBlur" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur in="SourceGraphic" stdDeviation="50"/>
+</filter>
+</defs>
+<g clip-path="url(#clip0_3390_15451)">
+<mask id="mask0_3390_15451" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-239" y="-267" width="1484" height="1475">
+<g filter="url(#blobBlur)">
+<path d="M283.457 137.702C133.576 123.492 -9.49156 280.647 -62.2903 361C-343.316 333.088 -205.358 145.315 -203.655 -13.2777C-201.952 -171.87 220.439 -75.4459 375.429 -32.3088C530.419 10.8283 470.808 155.464 283.457 137.702Z" fill="black" fill-opacity="0.1"/>
+<path d="M596.388 634.946C705.204 576.604 906.189 680.018 993.079 739.019C1054.39 897.233 897.191 1026.39 798.884 1092.28C700.577 1158.18 60.879 1307.5 351.9 1106.27C642.92 905.037 460.367 707.874 596.388 634.946Z" fill="black" fill-opacity="0.5"/>
+<path d="M138.169 777.937C75.5116 843.873 75.7315 965.008 83.6736 1017.33C29.641 980.619 -33.0558 630.691 -55.7208 565.501C-78.3858 500.31 -19.8664 474.829 104.236 471.589C228.338 468.349 216.49 695.517 138.169 777.937Z" fill="black" fill-opacity="0.35"/>
+</g>
+</mask>
+<g mask="url(#mask0_3390_15451)">
+<rect width="1440" height="634" fill="url(#pattern0_3390_15451)"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_3390_15451">
+<rect width="1440" height="634" fill="white"/>
+</clipPath>
+<pattern id="pattern0_3390_15451" patternUnits="userSpaceOnUse" patternTransform="matrix(200 0 0 200 0 0)" preserveAspectRatio="none" viewBox="0 0 200 200" width="1" height="1">
+<g id="pattern0_3390_15451_inner">
+<pattern id="pattern1_3390_15451" patternUnits="userSpaceOnUse" patternTransform="matrix(13.3319 0 0 13.3319 0 0)" preserveAspectRatio="none" viewBox="0 0 13.4394 13.4394" width="1" height="1">
+<g id="pattern1_3390_15451_inner">
+<circle cx="1.3" cy="1.3" r="1.3" fill="#A5AEE9"/>
+</g>
+</pattern><rect width="200" height="200" fill="url(#pattern1_3390_15451)"/>
+</g>
+</pattern></defs>
+</svg>

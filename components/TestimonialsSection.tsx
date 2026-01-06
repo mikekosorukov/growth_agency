@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -10,6 +11,7 @@ interface Testimonial {
   testimonialText: string;
   authorTitle: string;
   employmentType: string;
+  avatarUrl: string;
 }
 
 export default function TestimonialsSection() {
@@ -66,37 +68,46 @@ export default function TestimonialsSection() {
       testimonialText: '"From discovery through execution, ... Mike\'s contributions significantly elevated our product, and his dedication to customer-driven innovation was evident in every project he touched."',
       authorTitle: 'Fractional Product Growth Lead',
       employmentType: 'Contractor',
+      avatarUrl: '/testimonial-1.png',
     },
     {
-      authorName: 'Sarah Mitchell',
-      authorRole: 'Product Manager at ArtVenue',
-      testimonialText: '"From discovery through execution, ... Mike\'s contributions significantly elevated our product, and his dedication to customer-driven innovation was evident in every project he touched."',
+      authorName: 'Kirill Chabanov',
+      authorRole: 'COO at aqua cloud, a Test Management SaaS',
+      testimonialText: '"Mike\'s sharp in understanding the market and the customers, often diving deep into research and data analysis. That helped us a lot with better positioning of our product."',
       authorTitle: 'Product Manager: Digital Innovation',
       employmentType: 'Full-time',
+      avatarUrl: '/testimonial-icon-2.jpeg',
     },
     {
-      authorName: 'Jonathan Kite',
-      authorRole: 'SEO at Rent Ready, a Real Estate Marketplace',
-      testimonialText: '"From discovery through execution, ... Mike\'s contributions significantly elevated our product, and his dedication to customer-driven innovation was evident in every project he touched."',
+      authorName: 'Leonid Netrebskii',
+      authorRole: 'Head of Software Engineering at Rent Ready, a Real Estate Marketplace',
+      testimonialText: '"Mike revolutionized our product approach: development teams are now happy to see the goals and values of their work, and product managers are focused on business impact."',
       authorTitle: 'Fractional Product Growth Lead',
       employmentType: 'Contractor',
-    },
-    {
-      authorName: 'Sarah Mitchell',
-      authorRole: 'Product Manager at ArtVenue',
-      testimonialText: '"From discovery through execution, ... Mike\'s contributions significantly elevated our product, and his dedication to customer-driven innovation was evident in every project he touched."',
-      authorTitle: 'Product Manager: Digital Innovation',
-      employmentType: 'Full-time',
+      avatarUrl: '/testimonial-icon-3.png',
     },
   ];
 
   return (
     <section
-      className="relative box-border flex w-full flex-col items-center gap-[64px] bg-[#1d2241] px-[20px] py-[40px] sm:px-[40px] sm:py-[50px] md:px-[60px] md:py-[60px] lg:px-[80px] lg:py-[80px]"
+      className="relative box-border flex w-full flex-col items-center gap-[64px] bg-[#1d2241] px-[20px] py-[40px] sm:px-[40px] sm:py-[50px] md:px-[60px] md:py-[60px] lg:px-[80px] lg:py-[80px] overflow-hidden"
       aria-label="Client Testimonials"
     >
+      {/* Noise texture overlay */}
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          backgroundImage: 'url(/300-60-15-monochrome.png)',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '350px 350px',
+          mixBlendMode: 'soft-light',
+          opacity: 0.65,
+        }}
+      />
+      
       {/* Carousel Container */}
-      <div className="relative w-full max-w-[1280px]">
+      <div className="relative z-10 w-full max-w-[1280px]">
         <div className="flex items-center gap-[16px]">
           {/* Previous Button */}
           <button
@@ -123,25 +134,13 @@ export default function TestimonialsSection() {
                   key={index}
                   className="relative flex min-w-0 flex-[0_0_100%] flex-col border border-solid border-[#3f4367] bg-[#171c39] px-[40px] py-[24px] md:flex-[0_0_calc(50%-8px)]"
                 >
-                  {/* Background Image Overlay */}
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-                    <div className="absolute inset-0 bg-[#171c39]" />
-                    <Image
-                      src="/testimonial-bg.png"
-                      alt=""
-                      fill
-                      className="object-cover opacity-20 mix-blend-soft-light"
-                      priority={false}
-                    />
-                  </div>
-
                   {/* Content Wrapper - grows to fill space */}
                   <div className="relative z-10 flex flex-col gap-[16px] flex-grow">
                     {/* User Card */}
                     <div className="flex h-[64px] items-center justify-start gap-[8px]">
                       <div className="relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full bg-[#1d2241]">
                         <Image
-                          src="/testimonial-1.png"
+                          src={testimonial.avatarUrl}
                           alt={testimonial.authorName}
                           fill
                           className="object-cover"
@@ -166,11 +165,14 @@ export default function TestimonialsSection() {
                       ))}
                     </blockquote>
 
-                    {/* Load More Button */}
-                    <div className="flex justify-start mt-[24px]">
-                      <button
+                    {/* View on LinkedIn Button */}
+                    <div className="flex justify-start mt-auto pt-[24px]">
+                      <Link
+                        href="https://www.linkedin.com/in/mkosorukov/details/recommendations/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="group relative z-10 flex shrink-0 items-center justify-center border border-solid border-[#494f8e] bg-[#0E1330]/30 px-[12px] py-[8px] transition-all hover:bg-[#1f2446] hover:border-[#7a82c4] cursor-pointer w-fit"
-                        aria-label="Load more case studies"
+                        aria-label="View recommendation on LinkedIn"
                       >
                       <div className="flex items-center justify-center gap-[8px] px-[12px] py-0">
                         <span className="text-[14px] font-medium leading-none tracking-[0.5px] text-[#494f8e] whitespace-pre transition-colors group-hover:text-[#7a82c4]">
@@ -189,7 +191,7 @@ export default function TestimonialsSection() {
                           <path d="M10 14L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                         </svg>
                       </div>
-                    </button>
+                    </Link>
                     </div>
                   </div>
                 </article>

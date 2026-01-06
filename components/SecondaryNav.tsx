@@ -12,7 +12,7 @@ export default function SecondaryNav() {
   const stickyOffsetRef = useRef<number>(0);
   const isAnimatingRef = useRef<boolean>(false);
 
-  const smoothScrollTo = (targetId: string) => {
+  const smoothScrollTo = (targetId: string, section: string) => {
     const targetElement = document.getElementById(targetId);
     if (!targetElement || !navRef.current) return;
 
@@ -35,8 +35,14 @@ export default function SecondaryNav() {
         window.scrollTo(0, value);
       },
       onComplete: () => {
-        // Re-enable scroll-based tracking after animation completes
-        isAnimatingRef.current = false;
+        // Force set the correct active section when animation completes
+        setActiveSection(section);
+        
+        // Add a small delay before re-enabling scroll-based tracking
+        // This prevents immediate re-detection while the view is settling
+        setTimeout(() => {
+          isAnimatingRef.current = false;
+        }, 150);
       },
     });
   };
@@ -45,7 +51,7 @@ export default function SecondaryNav() {
     e.preventDefault();
     // Immediately update active section on click
     setActiveSection(section);
-    smoothScrollTo(targetId);
+    smoothScrollTo(targetId, section);
   };
 
   useEffect(() => {
@@ -92,6 +98,7 @@ export default function SecondaryNav() {
       const contentShowcaseOutcomes = document.getElementById('content-showcase-outcomes');
       const contentShowcaseProblems = document.getElementById('content-showcase-problems');
       const contentShowcaseSolutions = document.getElementById('content-showcase-solutions');
+      const contentShowcaseExecution = document.getElementById('content-showcase-problems-2');
       
       // Find which section the nav is currently over by checking which section's top
       // is closest to the nav bottom position (but hasn't passed the nav yet)
@@ -100,24 +107,37 @@ export default function SecondaryNav() {
         { id: 'outcomes', element: contentShowcaseOutcomes },
         { id: 'problems', element: contentShowcaseProblems },
         { id: 'solutions', element: contentShowcaseSolutions },
+        { id: 'execution', element: contentShowcaseExecution },
       ];
       
       let closestSection = '';
       let closestDistance = Infinity;
       
-      sections.forEach(({ id, element }) => {
+      sections.forEach(({ id, element }, index) => {
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Check if section overlaps with nav area
-          if (rect.top <= navBottom && rect.bottom >= 81) {
-            // Calculate distance from section top to nav bottom
-            // Prefer sections that are approaching (positive distance but small)
-            const distance = rect.top - navBottom;
-            
-            // If this section is closer to the nav bottom than previous ones, select it
-            if (Math.abs(distance) < Math.abs(closestDistance)) {
-              closestDistance = distance;
-              closestSection = id;
+          const isLastSection = index === sections.length - 1;
+          
+          // For the last section, keep it highlighted once you've scrolled into it
+          // since there's no next section to take over
+          if (isLastSection) {
+            if (rect.top <= navBottom) {
+              const distance = rect.top - navBottom;
+              if (Math.abs(distance) < Math.abs(closestDistance)) {
+                closestDistance = distance;
+                closestSection = id;
+              }
+            }
+          } else {
+            // For non-last sections, check if section overlaps with nav area
+            if (rect.top <= navBottom && rect.bottom >= 81) {
+              const distance = rect.top - navBottom;
+              
+              // If this section is closer to the nav bottom than previous ones, select it
+              if (Math.abs(distance) < Math.abs(closestDistance)) {
+                closestDistance = distance;
+                closestSection = id;
+              }
             }
           }
         }
@@ -137,10 +157,13 @@ export default function SecondaryNav() {
     <motion.nav
       ref={navRef}
       className="sticky top-[81px] z-40 w-full border-y border-solid border-[#3f4367] bg-[#171c39] before:absolute before:left-0 before:right-0 before:top-[-9px] before:h-[8px] before:bg-[#1d2241] before:content-['']"
-      initial={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 1, y: 0, boxShadow: '0 0 0 0 rgba(5, 9, 32, 0)' }}
       animate={{
         opacity: hideNav ? 0 : 1,
         y: hideNav ? -60 : 0, // Slide up 60px to go under the main header
+        boxShadow: showContent && !hideNav 
+          ? '0 -6px 6px -6px rgba(5, 9, 32, 0.9), 0 6px 6px -6px rgba(5, 9, 32, 0.9)'
+          : '0 0 0 0 rgba(5, 9, 32, 0)',
       }}
       transition={{
         duration: 0.6,
@@ -150,7 +173,20 @@ export default function SecondaryNav() {
         pointerEvents: hideNav ? 'none' : 'auto',
       }}
     >
-      <div className="flex flex-col gap-[12px] px-[20px] py-[14px] sm:px-[40px] sm:gap-[14px] md:flex-row md:items-center md:justify-between md:gap-[24px] md:px-[60px] md:py-[14px] lg:px-[80px]">
+      {/* Noise texture overlay */}
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          backgroundImage: 'url(/300-60-15-monochrome.png)',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '350px 350px',
+          mixBlendMode: 'soft-light',
+          opacity: 0.65,
+        }}
+      />
+      
+      <div className="relative z-10 flex flex-col gap-[12px] px-[20px] py-[14px] sm:px-[40px] sm:gap-[14px] md:flex-row md:items-center md:justify-between md:gap-[24px] md:px-[60px] md:py-[14px] lg:px-[80px]">
         {/* Left - Statement */}
         <div className="w-full md:flex-1 md:min-w-[200px]">
           <motion.p
@@ -162,7 +198,7 @@ export default function SecondaryNav() {
               ease: 'easeInOut',
             }}
           >
-            Starting with the why is the most important part
+            GTM, rebuilt from the fundamentals up
           </motion.p>
         </div>
 
@@ -181,33 +217,44 @@ export default function SecondaryNav() {
             onClick={(e) => handleNavClick(e, 'content-showcase-outcomes', 'outcomes')}
             className={`text-[14px] font-normal leading-[1.4] transition-all lg:text-[15px] ${
               activeSection === 'outcomes'
-                ? 'text-[#dcdff2] underline decoration-1 underline-offset-4'
-                : 'text-[#a5aee9] hover:text-[#dcdff2]'
+                ? 'text-[#a5c1e9] underline decoration-1 underline-offset-4'
+                : 'text-[#a5aee9] hover:text-[#a5c1e9]'
             }`}
           >
-            The outcomes
+            Context
           </Link>
           <Link
             href="#content-showcase-problems"
             onClick={(e) => handleNavClick(e, 'content-showcase-problems', 'problems')}
             className={`text-[14px] font-normal leading-[1.4] transition-all lg:text-[15px] ${
               activeSection === 'problems'
-                ? 'text-[#dcdff2] underline decoration-1 underline-offset-4'
-                : 'text-[#a5aee9] hover:text-[#dcdff2]'
+                ? 'text-[#b8a5e9] underline decoration-1 underline-offset-4'
+                : 'text-[#a5aee9] hover:text-[#b8a5e9]'
             }`}
           >
-            The problems
+            Customer
           </Link>
           <Link
             href="#content-showcase-solutions"
             onClick={(e) => handleNavClick(e, 'content-showcase-solutions', 'solutions')}
             className={`text-[14px] font-normal leading-[1.4] transition-all lg:text-[15px] ${
               activeSection === 'solutions'
-                ? 'text-[#dcdff2] underline decoration-1 underline-offset-4'
-                : 'text-[#a5aee9] hover:text-[#dcdff2]'
+                ? 'text-[#e7a5e9] underline decoration-1 underline-offset-4'
+                : 'text-[#a5aee9] hover:text-[#e7a5e9]'
             }`}
           >
-            The solutions
+            Strategy
+          </Link>
+          <Link
+            href="#content-showcase-problems-2"
+            onClick={(e) => handleNavClick(e, 'content-showcase-problems-2', 'execution')}
+            className={`text-[14px] font-normal leading-[1.4] transition-all lg:text-[15px] ${
+              activeSection === 'execution'
+                ? 'text-[#e9a5a5] underline decoration-1 underline-offset-4'
+                : 'text-[#a5aee9] hover:text-[#e9a5a5]'
+            }`}
+          >
+            Execution
           </Link>
         </motion.div>
       </div>

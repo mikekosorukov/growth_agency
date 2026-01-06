@@ -39,20 +39,21 @@ export default function FAQSection() {
 
   return (
     <section
-      className="relative box-border flex w-full flex-col items-center gap-[40px] border border-solid border-[#3f4367] bg-[#171c39] px-[20px] py-[40px] sm:gap-[48px] sm:px-[40px] sm:py-[50px] md:gap-[56px] md:px-[60px] md:py-[60px] lg:gap-[64px] lg:px-[80px] lg:py-[80px]"
+      className="relative box-border flex w-full flex-col items-center gap-[40px] border border-solid border-[#3f4367] bg-[#171c39] px-[20px] py-[40px] sm:gap-[48px] sm:px-[40px] sm:py-[50px] md:gap-[56px] md:px-[60px] md:py-[60px] lg:gap-[64px] lg:px-[80px] lg:py-[80px] overflow-hidden"
       aria-label="Frequently Asked Questions"
     >
-      {/* Background with texture overlay */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[#171c39]" />
-        <Image
-          src="/faq-bg.png"
-          alt=""
-          fill
-          className="object-cover object-center opacity-20 mix-blend-soft-light"
-          priority={false}
-        />
-      </div>
+      {/* Noise texture overlay */}
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          backgroundImage: 'url(/300-60-15-monochrome.png)',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '350px 350px',
+          mixBlendMode: 'soft-light',
+          opacity: 0.65,
+        }}
+      />
 
       {/* Section Header */}
       <div className="relative z-10 flex w-full max-w-[1280px] flex-col items-center gap-[48px]">
@@ -60,7 +61,7 @@ export default function FAQSection() {
           <p className="w-full text-[12px] font-normal leading-[1.4] text-[#ff885d] sm:text-[13px] md:text-[14px]">
             FAQ
           </p>
-          <h2 className="w-full text-[28px] font-bold leading-[1.1] text-[#dcdff2] sm:text-[32px] md:text-[36px] lg:text-[42px]">
+          <h2 className="w-full text-[26px] font-bold leading-[1.1] text-[#dcdff2] sm:text-[30px] md:text-[34px] lg:text-[38px]">
             Find out if we could be a fit
           </h2>
         </div>

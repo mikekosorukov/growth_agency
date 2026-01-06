@@ -1,0 +1,36 @@
+<svg width="1440" height="820" viewBox="0 0 1440 820" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<filter id="blobBlurRect" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur in="SourceGraphic" stdDeviation="50"/>
+</filter>
+<filter id="blobBlurPath" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur in="SourceGraphic" stdDeviation="300"/>
+</filter>
+<clipPath id="clip0_3418_13987">
+<rect width="1440" height="820" fill="white"/>
+</clipPath>
+<pattern id="pattern0_3418_13987" patternUnits="userSpaceOnUse" patternTransform="matrix(300 0 0 300 0 0)" preserveAspectRatio="none" viewBox="0 0 200 200" width="1" height="1">
+<g id="pattern0_3418_13987_inner">
+<pattern id="pattern1_3418_13987" patternUnits="userSpaceOnUse" patternTransform="matrix(50.0013 0 0 208 75.9609 0)" preserveAspectRatio="none" viewBox="0 0 50.0013 208" width="1" height="1">
+<g id="pattern1_3418_13987_inner">
+<line x1="0.25" y1="1.09278e-08" x2="0.249991" y2="200" stroke="#A5AEE9" stroke-width="0.5" stroke-opacity="0.7"/>
+<line x1="48.3281" y1="5.90927e-09" x2="48.3281" y2="200" stroke="#A5AEE9" stroke-width="0.5" stroke-opacity="0.7"/>
+</g>
+</pattern><rect width="200" height="200" fill="url(#pattern1_3418_13987)"/>
+</g>
+</pattern>
+</defs>
+<g clip-path="url(#clip0_3418_13987)">
+<mask id="mask0_3418_13987" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-516" y="-200" width="2472" height="1220">
+<g filter="url(#blobBlurRect)">
+<rect x="43" y="600" width="1353" height="500" fill="black" fill-opacity="0.4"/>
+</g>
+<g filter="url(#blobBlurPath)">
+<path d="M1956 626.5C1956 744.654 1825.78 857.969 1593.98 941.516C1362.19 1025.06 1047.81 1072 720 1072C392.193 1072 77.8111 1025.06 -153.984 941.516C-385.779 857.969 -516 744.654 -516 626.5L-121.968 626.5C-121.968 706.987 -33.2608 784.177 124.639 841.09C282.538 898.003 496.696 929.976 720 929.976C943.304 929.976 1157.46 898.003 1315.36 841.09C1473.26 784.177 1561.97 706.987 1561.97 626.5H1956Z" fill="black" fill-opacity="0.5"/>
+</g>
+</mask>
+<g mask="url(#mask0_3418_13987)">
+<rect width="1440" height="820" fill="url(#pattern0_3418_13987)"/>
+</g>
+</g>
+</svg>

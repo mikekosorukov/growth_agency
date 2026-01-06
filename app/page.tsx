@@ -9,8 +9,10 @@ import VideoShowcaseSection from "@/components/VideoShowcaseSection";
 import SolutionIntroSection from "@/components/SolutionIntroSection";
 import SecondaryNav from "@/components/SecondaryNav";
 import FAQSection from "@/components/FAQSection";
+import AboutSection from "@/components/AboutSection";
 import BookingSection from "@/components/BookingSection";
 import Footer from "@/components/Footer";
+import DividerSection from "@/components/DividerSection";
 
 export default function Home() {
   return (
@@ -20,6 +22,9 @@ export default function Home() {
       <main>
         {/* Hero Section */}
         <HeroSection />
+        
+        {/* Divider Section */}
+        <DividerSection />
         
         {/* Problem Section */}
         <ProblemSection />
@@ -39,8 +44,20 @@ export default function Home() {
         {/* Content Showcase Section */}
         <ContentShowcaseSection id="content-showcase-solutions" />
         
+        {/* Video Showcase Section - Duplicate */}
+        <VideoShowcaseSection id="content-showcase-problems-2" />
+        
+        {/* Divider Section */}
+        <DividerSection />
+        
         {/* Outcomes Section */}
         <OutcomesSection />
+        
+        {/* About Section */}
+        <AboutSection />
+        
+        {/* FAQ Section */}
+        <FAQSection />
         
         {/* Companies Section */}
         <CompaniesSection />
@@ -48,41 +65,8 @@ export default function Home() {
         {/* Testimonials Section */}
         <TestimonialsSection />
         
-        {/* FAQ Section */}
-        <FAQSection />
-        
         {/* Booking Section */}
         <BookingSection />
-        
-        {/* Other sections */}
-        <div className="container mx-auto px-6 py-20">
-          <section id="services" className="min-h-screen flex items-center justify-center">
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-white mb-4">Services</h2>
-              <p className="text-lg text-[#a5aee9]">
-                Scroll to see the sticky header in action
-              </p>
-            </div>
-          </section>
-
-          <section id="portfolio" className="min-h-screen flex items-center justify-center">
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-white mb-4">Portfolio</h2>
-              <p className="text-lg text-[#a5aee9]">
-                Our work speaks for itself
-              </p>
-            </div>
-          </section>
-
-          <section id="about" className="min-h-screen flex items-center justify-center">
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-white mb-4">About</h2>
-              <p className="text-lg text-[#a5aee9]">
-                Learn more about our team
-              </p>
-            </div>
-          </section>
-        </div>
       </main>
 
       {/* Footer */}

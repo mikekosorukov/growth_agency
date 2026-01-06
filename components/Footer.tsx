@@ -3,8 +3,21 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="w-full border border-[#3f4367] bg-[#1d2241] px-6 py-8 lg:px-20">
-      <div className="relative flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-12">
+    <footer className="relative w-full bg-[#1d2241] px-6 py-8 lg:px-20">
+      {/* Noise texture overlay */}
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          backgroundImage: 'url(/300-60-15-monochrome.png)',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '350px 350px',
+          mixBlendMode: 'soft-light',
+          opacity: 0.65,
+        }}
+      />
+      
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-12">
         {/* Logo Container - Left */}
         <div className="flex items-center gap-2 shrink-0">
           <div className="relative h-[21px] w-[40.5px]">
@@ -16,7 +29,7 @@ export default function Footer() {
             />
           </div>
           <p className="text-[#a5aee9] text-sm lg:text-base font-normal leading-[1.4] whitespace-nowrap">
-            Product Growth & Innovation
+            GTM & Product Growth
           </p>
         </div>
 
@@ -28,10 +41,10 @@ export default function Footer() {
         {/* Social Icons - Right */}
         <div className="flex items-center gap-4 shrink-0">
           <Link
-            href="https://wa.me"
+            href="https://api.whatsapp.com/send?phone=66999089830"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-[18px] h-[18px] flex items-center justify-center hover:opacity-80 transition-opacity"
+            className="w-[18px] h-[18px] flex items-center justify-center hover:brightness-125 hover:saturate-150 transition-all"
             aria-label="WhatsApp"
           >
             <Image
@@ -43,25 +56,25 @@ export default function Footer() {
             />
           </Link>
           <Link
-            href="https://twitter.com"
+            href="https://x.com/MikeKosorukov"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-[18px] h-[18px] flex items-center justify-center hover:opacity-80 transition-opacity"
-            aria-label="Twitter"
+            className="w-[18px] h-[18px] flex items-center justify-center hover:brightness-125 hover:saturate-150 transition-all"
+            aria-label="X (Twitter)"
           >
             <Image
-              src="/icon-twitter.svg"
-              alt="Twitter"
+              src="/icon-x-twitter.svg"
+              alt="X (Twitter)"
               width={18}
               height={18}
               className="w-full h-full"
             />
           </Link>
           <Link
-            href="https://linkedin.com"
+            href="https://linkedin.com/in/mkosorukov/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-[18px] h-[18px] flex items-center justify-center hover:opacity-80 transition-opacity"
+            className="w-[18px] h-[18px] flex items-center justify-center hover:brightness-125 hover:saturate-150 transition-all"
             aria-label="LinkedIn"
           >
             <Image

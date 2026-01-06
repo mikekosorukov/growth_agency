@@ -1,0 +1,34 @@
+<svg width="1440" height="737" viewBox="0 0 1440 737" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<filter id="blobBlur5" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur in="SourceGraphic" stdDeviation="50"/>
+</filter>
+</defs>
+<g clip-path="url(#clip0_3411_15896)">
+<mask id="mask0_3411_15896" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-70" y="-326" width="1666" height="1542">
+<g filter="url(#blobBlur5)">
+<path d="M562.388 642.946C671.204 584.604 872.189 688.018 959.079 747.019C1020.39 905.233 863.191 1034.39 764.884 1100.28C666.577 1166.18 26.879 1315.5 317.9 1114.27C608.92 913.037 426.367 715.874 562.388 642.946Z" fill="black" fill-opacity="0.5"/>
+<path d="M251.096 712.443C298.469 790.091 415.494 821.38 468.084 827.318C418.582 869.944 64.3891 839.486 -4.45267 844.418C-73.2945 849.35 -82.6811 786.218 -53.5365 665.543C-24.392 544.868 191.879 615.383 251.096 712.443Z" fill="black" fill-opacity="0.3"/>
+<path d="M1021.2 -88.353C691.795 -316.446 599.201 -20.2539 594.08 156.354C536.184 207.491 343.137 -23.1414 329.952 -74.2827C316.766 -125.424 306.776 -168.924 726.193 -305.668C1145.61 -442.411 1432.96 196.763 1021.2 -88.353Z" fill="black" fill-opacity="0.4"/>
+<path d="M1395.37 345.988C1330.81 209.978 1122.56 167.583 1026.5 163.387C906.55 -92.2809 1138.48 -69.9561 1275.57 -149.716C1412.66 -229.475 1546.16 182.699 1588.49 337.912C1630.82 493.125 1476.06 516 1395.37 345.988Z" fill="black" fill-opacity="0.4"/>
+</g>
+</mask>
+<g mask="url(#mask0_3411_15896)">
+<rect width="1440" height="737" fill="url(#pattern0_3411_15896)"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_3411_15896">
+<rect width="1440" height="737" fill="white"/>
+</clipPath>
+<pattern id="pattern0_3411_15896" patternUnits="userSpaceOnUse" patternTransform="matrix(200 0 0 200 0 0)" preserveAspectRatio="none" viewBox="0 0 200 200" width="1" height="1">
+<g id="pattern0_3411_15896_inner">
+<pattern id="pattern1_3411_15896" patternUnits="userSpaceOnUse" patternTransform="matrix(24.9942 0 0 24.9942 0 0)" preserveAspectRatio="none" viewBox="0 0 23.1 23.1" width="1" height="1">
+<g id="pattern1_3411_15896_inner">
+<circle cx="1.05" cy="1.05" r="1.05" fill="#A5AEE9"/>
+</g>
+</pattern><rect width="200" height="200" fill="url(#pattern1_3411_15896)"/>
+</g>
+</pattern>
+</defs>
+</svg>

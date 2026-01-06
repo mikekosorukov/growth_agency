@@ -6,40 +6,38 @@ import Link from 'next/link';
 export default function ProblemSection() {
   const cards = [
     {
-      icon: '/icon-calendar.svg',
-      text: "Many founding teams don't have product and go-to-market resource. The founders spread too thin trying to built a team, ship the product and acquire customers"
+      icon: '/problemicon-1.png',
+      text: "Most tech startups don't have the business expertise to bring their product to market — yet it's too early to hire a full-time executive."
     },
     {
-      icon: '/icon-luggage.svg',
-      text: "The fundamental variables that affect all facets of business - marketing, sales, product development - is understanding who you build for, why, and how it will move the needle for the business"
+      icon: '/problemicon-2.png',
+      text: "Solving go-to-market with default tactics is a dangerous shortcut. Without truly understanding the customer first, that approach always fails."
     },
     {
-      icon: '/icon-activity.svg',
-      text: "Separating the chaff from the wheats become even more difficult with the rise of Gen AI. This pushes companies even further away from the customers and serving their outcomes."
-    },
-    {
-      icon: '/icon-car.svg',
-      text: "External consultants and agencies lack in-depth knowledge and full immersion that is required to identify and solve the right customer problems"
+      icon: '/problemicon-3.png',
+      text: "One-and-done doesn't work for go-to-market. Without team alignment and buy-in, the GTM efforts will stall."
     }
   ];
 
   return (
     <section 
       id="problems"
-      className="relative box-border flex w-full flex-col items-center gap-[40px] border border-solid border-[#3f4367] bg-[#171c39] px-[20px] py-[40px] sm:gap-[48px] sm:px-[40px] sm:py-[50px] md:gap-[56px] md:px-[60px] md:py-[60px] lg:gap-[64px] lg:px-[80px] lg:py-[80px]"
+      className="relative box-border flex w-full flex-col items-center gap-[40px] border border-solid border-[#3f4367] bg-[#171c39] px-[40px] pt-[40px] pb-[50px] sm:gap-[48px] sm:px-[80px] sm:pt-[50px] sm:pb-[65px] md:gap-[56px] md:px-[120px] md:pt-[60px] md:pb-[80px] lg:gap-[64px] lg:px-[160px] lg:pt-[80px] lg:pb-[100px] overflow-hidden"
+      style={{ boxShadow: '0 -6px 6px -6px rgba(5, 9, 32, 0.9), 0 6px 6px -6px rgba(5, 9, 32, 0.9)' }}
       aria-labelledby="problem-heading"
     >
-      {/* Background Image Overlay */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[#171c39]" />
-        <Image
-          src="/problem-section-bg.png"
-          alt=""
-          fill
-          className="object-cover opacity-20 mix-blend-soft-light"
-          priority={false}
-        />
-      </div>
+      {/* Noise texture overlay */}
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          backgroundImage: 'url(/300-60-15-monochrome.png)',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '350px 350px',
+          mixBlendMode: 'soft-light',
+          opacity: 0.65,
+        }}
+      />
 
       {/* Section Title */}
       <div className="relative z-10 flex w-full max-w-[1280px] flex-col items-center gap-[6px] text-center sm:gap-[8px]">
@@ -48,32 +46,32 @@ export default function ProblemSection() {
         </p>
         <h2 
           id="problem-heading"
-          className="w-full text-[28px] font-bold leading-[1.1] text-[#dcdff2] sm:text-[32px] md:text-[36px] lg:text-[42px]"
+          className="w-full text-[26px] font-bold leading-[1.1] text-[#dcdff2] sm:text-[30px] md:text-[34px] lg:text-[38px]"
         >
-          Infliction point between early-stage and growth stage
+          Most GTM fails not because it&apos;s hard,<br />but because it&apos;s shallow
         </h2>
       </div>
 
       {/* Cards Container */}
-      <div className="relative z-10 grid w-full max-w-[1280px] grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-4">
+      <div className="relative z-10 grid w-full max-w-[1280px] grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((card, index) => (
           <article
             key={index}
-            className="flex flex-col items-center gap-[16px] border border-solid border-[#3f4367] bg-[#1d2241] p-[16px] transition-all hover:border-[#5f6387] hover:bg-[#222749]"
+            className="flex flex-col items-center gap-[16px] border border-solid border-[#3f4367] bg-[#1d2241] pt-[32px] px-[16px] pb-[32px]"
           >
             {/* Icon */}
-            <div className="relative h-[48px] w-[48px] shrink-0">
+            <div className="relative h-[28px] w-[28px] shrink-0">
               <Image
                 src={card.icon}
                 alt=""
-                width={48}
-                height={48}
+                width={28}
+                height={28}
                 className="block h-full w-full"
               />
             </div>
             
             {/* Text */}
-            <p className="w-full text-center text-[16px] font-normal leading-[1.4] text-[#dcdff2] sm:text-[17px] lg:text-[18px]">
+            <p className="w-full text-center text-[16px] font-normal leading-[1.4] text-[#a5aee9] sm:text-[17px] lg:text-[18px]">
               {card.text}
             </p>
           </article>

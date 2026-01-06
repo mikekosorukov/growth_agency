@@ -1,0 +1,10 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="200" height="200" fill="url(#pattern0_3386_13941)"/>
+<defs>
+<pattern id="pattern0_3386_13941" patternUnits="userSpaceOnUse" patternTransform="matrix(10.5485 0 0 10.5485 -0.4125 -0.4125)" preserveAspectRatio="none" viewBox="-0.75 -0.75 19.179 19.179" width="1" height="1">
+<g id="pattern0_3386_13941_inner">
+<path d="M9 0L0 9" stroke="#A5AEE9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M0 0L9 9" stroke="#A5AEE9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</pattern></defs>
+</svg>

@@ -1,0 +1,29 @@
+<svg width="1440" height="1000" viewBox="0 0 1440 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Top edge blur filter -->
+<filter id="filter_top_blur" x="-459" y="-6" width="2358" height="1351.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_3494_17201"/>
+</filter>
+
+<!-- Bottom edge blur filter -->
+<filter id="filter_bottom_blur">
+<feGaussianBlur in="SourceGraphic" stdDeviation="30" />
+</filter>
+
+<!-- Gradient for bottom fade -->
+<linearGradient id="bottomFade" x1="0%" y1="0%" x2="0%" y2="100%">
+<stop offset="0%" style="stop-color:black;stop-opacity:1" />
+<stop offset="100%" style="stop-color:black;stop-opacity:0" />
+</linearGradient>
+</defs>
+
+<!-- Main mask shape with top blur -->
+<g filter="url(#filter_top_blur)">
+<path d="M-309 144C-309 144 47.5 672.624 707.5 671C1367.5 669.376 1749 144 1749 144V1100H-309V144Z" fill="black"/>
+</g>
+
+<!-- Bottom fade rectangle with Gaussian blur -->
+<rect x="-309" y="1040" width="2058" height="120" fill="url(#bottomFade)" filter="url(#filter_bottom_blur)"/>
+</svg>

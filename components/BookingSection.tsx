@@ -1,243 +1,27 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
 
 export default function BookingSection() {
-  const embedRef = useRef<HTMLDivElement>(null);
-  const scriptLoadedRef = useRef(false);
-
-  useEffect(() => {
-    // Only load script once
-    if (scriptLoadedRef.current) return;
-    
-    // Check if script already exists
-    const existingScript = document.querySelector('script[src*="embed.js"]');
-    if (existingScript) {
-      scriptLoadedRef.current = true;
-      console.log('[Cal.com] Script already exists, initializing embed...');
-      // Wait a bit for script to be ready, then initialize
-      setTimeout(() => {
-        if (embedRef.current && window.Cal) {
-          console.log('[Cal.com] Initializing with existing script...');
-          try {
-            window.Cal('inline', {
-              elementOrSelector: embedRef.current,
-              calLink: 'mkosorukov/bookings.mkgproductlab.com',
-              layout: 'month_view',
-            });
-            console.log('[Cal.com] Embed initialized successfully');
-          } catch (error) {
-            console.error('[Cal.com] Error initializing embed:', error);
-          }
-        } else {
-          console.warn('[Cal.com] window.Cal not available or element not found');
-          console.log('[Cal.com] window.Cal:', window.Cal);
-          console.log('[Cal.com] embedRef.current:', embedRef.current);
-        }
-      }, 100);
-      return;
-    }
-
-    // Try multiple possible script URLs
-    const scriptUrls = [
-      'https://bookings.mkgproductlab.com/embed/embed.js',
-      'https://bookings.mkgproductlab.com/embed.js',
-    ];
-
-    let currentUrlIndex = 0;
-
-    const tryLoadScript = (urlIndex: number) => {
-      if (urlIndex >= scriptUrls.length) {
-        console.error('[Cal.com] All script URLs failed, using iframe fallback');
-        const fallback = document.querySelector('.cal-embed-fallback') as HTMLIFrameElement;
-        const embedDiv = document.querySelector('.cal-embed-inline') as HTMLElement;
-        if (fallback && embedDiv) {
-          embedDiv.style.display = 'none';
-          fallback.style.display = 'block';
-        }
-        return;
-      }
-
-      const scriptUrl = scriptUrls[urlIndex];
-        console.log(`[Cal.com] Attempting to load script from: ${scriptUrl}`);
-        console.log('[Cal.com] License check: The embed should verify license from backend automatically.');
-
-      // Load Cal.com embed script
-      const script = document.createElement('script');
-      script.src = scriptUrl;
-      script.async = true;
-      
-      script.onload = () => {
-        scriptLoadedRef.current = true;
-        console.log(`[Cal.com] Script loaded successfully from: ${scriptUrl}`);
-        
-        // Check license status
-        console.log('[Cal.com] Checking license status...');
-        fetch('https://bookings.mkgproductlab.com/api/trpc/viewer.public.license.check')
-          .then(r => r.json())
-          .then(data => {
-            console.log('[Cal.com] License check response:', data);
-            if (data?.result?.data?.json?.valid) {
-              console.log('[Cal.com] ✅ License is VALID - branding should be removed');
-            } else {
-              console.warn('[Cal.com] ⚠️ License is NOT valid or not recognized');
-              console.log('[Cal.com] Check NorthFlank env vars and restart the instance');
-            }
-          })
-          .catch(e => {
-            console.warn('[Cal.com] Could not verify license status:', e);
-            console.log('[Cal.com] Try: https://bookings.mkgproductlab.com/settings/admin/license');
-          });
-        
-        // Poll for Cal to become available (script might need time to initialize)
-        let attempts = 0;
-        const maxAttempts = 20; // Try for up to 4 seconds (20 * 200ms)
-        
-        const checkForCal = setInterval(() => {
-          attempts++;
-          console.log(`[Cal.com] Checking for window.Cal (attempt ${attempts}/${maxAttempts})...`);
-          console.log('[Cal.com] window.Cal type:', typeof window.Cal);
-          
-          // Check for any Cal-related globals
-          const calKeys = Object.keys(window).filter(k => k.toLowerCase().includes('cal'));
-          if (calKeys.length > 0) {
-            console.log('[Cal.com] Found Cal-related window keys:', calKeys);
-            calKeys.forEach(key => {
-              console.log(`[Cal.com] window.${key}:`, (window as any)[key]);
-            });
-          }
-          
-          // Also check if embed might have auto-initialized
-          if (embedRef.current && embedRef.current.children.length > 0) {
-            console.log('[Cal.com] ⚠️ Embed element has children - might have auto-initialized!');
-            console.log('[Cal.com] Children:', embedRef.current.children);
-          }
-          
-          // Check if Cal is now available
-          if (window.Cal) {
-            clearInterval(checkForCal);
-            console.log('[Cal.com] ✅ window.Cal is now available!');
-            
-            if (embedRef.current) {
-              console.log('[Cal.com] Initializing embed...');
-              
-              // Try different calLink formats
-              const calLinkFormats = [
-                'mkosorukov/bookings.mkgproductlab.com',
-                'mkosorukov',
-                'bookings.mkgproductlab.com/mkosorukov',
-              ];
-
-              let formatIndex = 0;
-              const tryInitialize = () => {
-                if (formatIndex >= calLinkFormats.length) {
-                  console.error('[Cal.com] All calLink formats failed, check console for details');
-                  // Show iframe fallback as last resort
-                  const fallback = document.querySelector('.cal-embed-fallback') as HTMLIFrameElement;
-                  const embedDiv = document.querySelector('.cal-embed-inline') as HTMLElement;
-                  if (fallback && embedDiv) {
-                    embedDiv.style.display = 'none';
-                    fallback.style.display = 'block';
-                  }
-                  return;
-                }
-
-                const calLink = calLinkFormats[formatIndex];
-                console.log(`[Cal.com] Trying calLink format: ${calLink}`);
-                
-                try {
-                  window.Cal('inline', {
-                    elementOrSelector: embedRef.current,
-                    calLink: calLink,
-                    layout: 'month_view',
-                  });
-                  console.log(`[Cal.com] Embed initialization called with format: ${calLink}`);
-                  console.log('[Cal.com] Check the page to see if embed rendered. If not, next format will be tried.');
-                  
-                  // Give it a moment to render, then check if content appeared
-                  setTimeout(() => {
-                    const embedElement = embedRef.current;
-                    if (embedElement && embedElement.children.length > 0) {
-                      console.log(`[Cal.com] ✅ Embed rendered successfully with format: ${calLink}`);
-                    } else {
-                      console.warn(`[Cal.com] ⚠️ Embed did not render with format: ${calLink}, trying next...`);
-                      formatIndex++;
-                      tryInitialize();
-                    }
-                  }, 1500);
-                } catch (error) {
-                  console.error(`[Cal.com] ❌ Error with format ${calLink}:`, error);
-                  formatIndex++;
-                  tryInitialize();
-                }
-              };
-
-              tryInitialize();
-            } else {
-              console.error('[Cal.com] embedRef.current is null');
-            }
-          } else if (attempts >= maxAttempts) {
-            clearInterval(checkForCal);
-            console.log('[Cal.com] ℹ️ window.Cal not available, but this is OK if embed auto-initialized from data attributes.');
-            console.log('[Cal.com] Checking if embed auto-initialized from data attributes...');
-            
-            // Check if embed auto-initialized from data attributes
-            setTimeout(() => {
-              const embedElement = embedRef.current;
-              if (embedElement && embedElement.children.length > 0) {
-                console.log('[Cal.com] ✅ Embed successfully auto-initialized from data attributes!');
-                console.log('[Cal.com] The embed is working - window.Cal is not needed for auto-initialization.');
-              } else {
-                console.warn('[Cal.com] ⚠️ Embed did not auto-initialize. Using iframe fallback.');
-                const fallback = document.querySelector('.cal-embed-fallback') as HTMLIFrameElement;
-                const embedDiv = document.querySelector('.cal-embed-inline') as HTMLElement;
-                if (fallback && embedDiv) {
-                  embedDiv.style.display = 'none';
-                  fallback.style.display = 'block';
-                }
-              }
-            }, 1000);
-          }
-        }, 200); // Check every 200ms
-      };
-      
-      script.onerror = () => {
-        console.warn(`[Cal.com] Script failed to load from: ${scriptUrl}`);
-        // Try next URL
-        tryLoadScript(urlIndex + 1);
-      };
-      
-      document.body.appendChild(script);
-    };
-
-    tryLoadScript(0);
-
-    return () => {
-      // Cleanup: don't remove script as it might be used elsewhere
-      scriptLoadedRef.current = false;
-    };
-  }, []);
 
   return (
     <section
       id="book"
-      className="relative box-border flex w-full flex-col items-center gap-[40px] border border-solid border-[#3f4367] bg-[#171c39] px-[20px] py-[40px] sm:gap-[48px] sm:px-[40px] sm:py-[50px] md:gap-[56px] md:px-[60px] md:py-[60px] lg:gap-[64px] lg:px-[80px] lg:py-[80px]"
+      className="booking-section-bg relative box-border flex w-full flex-col items-center gap-[40px] border border-solid border-[#3f4367] px-[20px] pt-[40px] pb-[60px] sm:gap-[48px] sm:px-[40px] sm:pt-[50px] sm:pb-[80px] md:gap-[56px] md:px-[60px] md:pt-[60px] md:pb-[100px] lg:gap-[64px] lg:px-[80px] lg:pt-[80px] lg:pb-[120px] overflow-hidden"
       aria-label="Book a consultation"
     >
-      {/* Background with texture overlay */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[#171c39]" />
-        <Image
-          src="/faq-bg.png"
-          alt=""
-          fill
-          className="object-cover object-center opacity-20 mix-blend-soft-light"
-          priority={false}
-        />
-      </div>
-
+      {/* Noise texture overlay */}
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          backgroundImage: 'url(/300-60-15-monochrome.png)',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '350px 350px',
+          mixBlendMode: 'soft-light',
+          opacity: 0.65,
+        }}
+      />
+      
       <div className="relative z-10 flex w-full max-w-[1200px] flex-col items-center gap-[48px]">
         {/* Section Text */}
         <div className="relative flex w-full flex-col items-start gap-[34px] text-center">
@@ -246,16 +30,16 @@ export default function BookingSection() {
             <p className="w-full text-[12px] font-normal leading-[1.4] text-[#ff885d] sm:text-[13px] md:text-[14px]">
               CONNECT
             </p>
-            <h2 className="w-full text-[28px] font-bold leading-[1.1] text-[#dcdff2] sm:text-[32px] md:text-[36px] lg:text-[42px]">
-              Book a time to speak with me
+            <h2 className="w-full text-[26px] font-bold leading-[1.1] text-[#dcdff2] sm:text-[30px] md:text-[34px] lg:text-[38px]">
+            The GTM system for sustainable growth
             </h2>
           </div>
           
           {/* Description */}
           <p className="font-variation-100 relative w-full shrink-0 text-[16px] font-normal leading-[1.4] text-[#a5aee9] sm:text-[17px] md:text-[18px]">
-            <span>Please select the time that fits you or just text me in </span>
+            <span>Pick a time that works for you — or message us on </span>
             <Link
-              href="https://t.me/markknd"
+              href="https://t.me/mkosorukov"
               className="cursor-pointer underline decoration-solid underline-offset-2 transition-colors hover:text-[#c9d1ff]"
               target="_blank"
               rel="noopener noreferrer"
@@ -265,7 +49,7 @@ export default function BookingSection() {
             </Link>
             <span> / </span>
             <Link
-              href="https://wa.me/77778451175"
+              href="https://api.whatsapp.com/send?phone=66999089830"
               className="cursor-pointer underline decoration-solid underline-offset-2 transition-colors hover:text-[#c9d1ff]"
               target="_blank"
               rel="noopener noreferrer"
@@ -276,37 +60,45 @@ export default function BookingSection() {
           </p>
         </div>
         
-        {/* Calendar Widget Container - Cal.com integration */}
-        <div className="relative w-full max-w-[1200px]">
-          <div 
-            ref={embedRef}
-            className="cal-embed cal-embed-inline"
-            data-cal-link="mkosorukov/bookings.mkgproductlab.com"
-            data-cal-config='{"layout":"month_view","theme":"dark","brandColor":"#8c99eb"}'
-            style={{ 
-              width: '100%', 
-              height: '100%', 
-              overflow: 'hidden',
-              minHeight: '600px',
-              backgroundColor: '#171c39',
-              border: '1px solid #3f4367',
-              borderRadius: '8px'
-            }}
-          />
-          {/* Fallback iframe in case embed script doesn't work */}
-          <iframe
-            src="https://bookings.mkgproductlab.com/mkosorukov?embed=true&theme=dark"
-            className="cal-embed-fallback"
-            style={{
-              width: '100%',
-              height: '800px',
-              border: 'none',
-              borderRadius: '8px',
-              display: 'none' // Hidden by default, shown if embed script fails
-            }}
-            title="Book a consultation"
-            allow="camera; microphone; geolocation"
-          />
+        {/* Button */}
+        <div className="relative flex shrink-0 items-center justify-center gap-[16px]">
+          <Link
+            href="/bookings"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group hero-button relative h-[48px] shrink-0 border border-solid border-[#8c99eb] bg-gradient-to-r from-[#323966] to-[#232b5c] hover:from-[#3a4170] hover:to-[#2a3467] transition-all cursor-pointer sm:h-[50px] md:h-[52px] lg:h-[56px]"
+            aria-label="Book a discovery call"
+          >
+            <div className="box-border flex h-full items-center justify-center overflow-clip rounded-[inherit] p-[12px] sm:p-[14px] lg:p-[16px]">
+              <div className="relative box-border flex shrink-0 items-center justify-center gap-[10px] px-[12px] py-0 sm:px-[14px] lg:px-[16px]">
+                <span className="relative shrink-0 whitespace-pre text-nowrap text-[16px] font-medium leading-none tracking-[0.5px] sm:text-[17px] md:text-[18px] lg:text-[20px] bg-gradient-to-r from-[#c9d1ff] to-[#8c99eb] bg-clip-text text-transparent">
+                  Book a Discovery Call
+                </span>
+              </div>
+              {/* Calendar Icon - appears on hover with cascade animation */}
+              <div className="relative shrink-0 h-[20px] w-0 sm:h-[22px] lg:h-[24px] overflow-visible group-hover:w-[20px] sm:group-hover:w-[22px] lg:group-hover:w-[24px] transition-all duration-300 ease-out">
+                <div className="relative size-full">
+                  {/* Calendar outline - appears first */}
+                  <div className="absolute inset-0 scale-0 group-hover:scale-100 transition-transform duration-300 ease-out origin-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="size-full">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M4.5 4.5C3.67157 4.5 3 5.17157 3 6V19.5C3 20.3284 3.67157 21 4.5 21H19.5C20.3284 21 21 20.3284 21 19.5V6C21 5.17157 20.3284 4.5 19.5 4.5H4.5ZM1.5 6C1.5 4.34315 2.84315 3 4.5 3H19.5C21.1569 3 22.5 4.34315 22.5 6V19.5C22.5 21.1569 21.1569 22.5 19.5 22.5H4.5C2.84315 22.5 1.5 21.1569 1.5 19.5V6Z" fill="#8c99eb"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M6 1.5C6.41421 1.5 6.75 1.83579 6.75 2.25V3.75C6.75 4.16421 6.41421 4.5 6 4.5C5.58579 4.5 5.25 4.16421 5.25 3.75V2.25C5.25 1.83579 5.58579 1.5 6 1.5Z" fill="#8c99eb"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M18 1.5C18.4142 1.5 18.75 1.83579 18.75 2.25V3.75C18.75 4.16421 18.4142 4.5 18 4.5C17.5858 4.5 17.25 4.16421 17.25 3.75V2.25C17.25 1.83579 17.5858 1.5 18 1.5Z" fill="#8c99eb"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M1.5 7.5C1.5 7.08579 1.83579 6.75 2.25 6.75H21.75C22.1642 6.75 22.5 7.08579 22.5 7.5C22.5 7.91421 22.1642 8.25 21.75 8.25H2.25C1.83579 8.25 1.5 7.91421 1.5 7.5Z" fill="#8c99eb"/>
+                    </svg>
+                  </div>
+                  {/* Date "31" - appears second with delay */}
+                  <div className="absolute inset-0 scale-0 group-hover:scale-100 transition-transform duration-300 delay-200 ease-out origin-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="size-full">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M15.8404 10.0837C15.9693 9.98875 16.1252 9.9375 16.2854 9.9375H16.5C16.9143 9.9375 17.25 10.2733 17.25 10.6875V18.5625C17.25 18.9767 16.9143 19.3125 16.5 19.3125C16.0858 19.3125 15.75 18.9767 15.75 18.5625V12.0137L14.695 12.7913C14.3616 13.037 13.892 12.9659 13.6463 12.6325C13.4006 12.299 13.4717 11.8295 13.8051 11.5838L15.8404 10.0837Z" fill="#8c99eb"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M6.5714 11.0055C6.89113 10.465 7.68897 9.75 8.99113 9.75C9.7101 9.75 10.4417 9.94447 11.0127 10.3794C11.6032 10.8291 11.9847 11.5122 11.986 12.3661C11.9892 12.7017 11.9255 13.0347 11.7986 13.3455C11.6718 13.656 11.4844 13.9383 11.2474 14.1756C10.5622 14.8746 9.57045 15.1233 8.99301 15.1233C8.57879 15.1233 8.24301 14.7875 8.24301 14.3733C8.24301 13.9591 8.57879 13.6233 8.99301 13.6233C9.10629 13.6233 9.32042 13.5931 9.56148 13.504C9.79948 13.4159 10.0185 13.2871 10.1777 13.1241C10.18 13.1218 10.1823 13.1195 10.1846 13.1172C10.2815 13.0204 10.3582 12.9053 10.4099 12.7785C10.4617 12.6516 10.4876 12.5158 10.486 12.3788C10.486 12.376 10.486 12.3731 10.486 12.3703C10.486 12.0018 10.3383 11.7512 10.1039 11.5727C9.84892 11.3785 9.45811 11.25 8.99113 11.25C8.28705 11.25 7.94864 11.6235 7.86243 11.7692C7.65155 12.1257 7.19158 12.2437 6.83507 12.0329C6.47856 11.822 6.36051 11.362 6.5714 11.0055Z" fill="#8c99eb"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M8.24402 14.373C8.24402 13.9588 8.57981 13.623 8.99402 13.623C9.62768 13.623 10.7251 13.8985 11.4775 14.6677C12.0219 15.2227 12.2345 15.966 12.2345 16.6957C12.2345 17.5835 11.8499 18.312 11.2304 18.8013C10.6281 19.2771 9.84275 19.4998 9.04137 19.4998C7.5216 19.4998 6.62629 18.4073 6.33857 17.9197C6.12806 17.5629 6.24661 17.1031 6.60334 16.8926C6.96008 16.6821 7.41992 16.8006 7.63042 17.1574C7.8002 17.4451 8.2952 17.9998 9.04137 17.9998C9.58014 17.9998 10.0164 17.8488 10.3006 17.6243C10.5676 17.4133 10.7345 17.1148 10.7345 16.6957C10.7345 16.2425 10.6041 15.9192 10.4064 15.7178L10.4054 15.7168C9.99916 15.3013 9.32588 15.123 8.99402 15.123C8.57981 15.123 8.24402 14.7873 8.24402 14.373Z" fill="#8c99eb"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
     </section>
