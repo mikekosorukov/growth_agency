@@ -1,0 +1,43 @@
+{
+  "name": "MKG Product Lab",
+  "short_name": "MKG Lab",
+  "description": "Go-to-market and product growth consulting for tech startups and SMBs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e1f",
+  "theme_color": "#171c39",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple touch icon"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "en"
+}
+

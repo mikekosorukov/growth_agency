@@ -49,3 +49,4 @@ export default function HeroRectangle({ dy, blur, strokeOpacity, fillOpacity }: 
 
 
 
+
