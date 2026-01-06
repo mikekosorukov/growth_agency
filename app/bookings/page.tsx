@@ -57,12 +57,19 @@ export default function BookingsPage() {
         }, 800); // Wait 800ms after iframe load for content to render
       };
       
-      if (iframe.complete || iframe.contentDocument?.readyState === 'complete') {
-        console.log('[Cal.com] Iframe already loaded');
-        handleIframeLoad();
-      } else {
+      // Check if iframe content is already loaded (cross-origin safe check)
+      try {
+        if (iframe.contentDocument?.readyState === 'complete') {
+          console.log('[Cal.com] Iframe already loaded');
+          handleIframeLoad();
+        } else {
+          iframe.addEventListener('load', handleIframeLoad);
+          console.log('[Cal.com] Added load event listener to iframe');
+        }
+      } catch {
+        // Cross-origin iframe - just add load listener
         iframe.addEventListener('load', handleIframeLoad);
-        console.log('[Cal.com] Added load event listener to iframe');
+        console.log('[Cal.com] Added load event listener to iframe (cross-origin)');
       }
       
       // Method 2: MutationObserver to watch for Cal.com UI elements
