@@ -55,12 +55,13 @@ export default function HeroSection() {
   const backgroundScale = useTransform(progress, [0, 1], [1, 0.97]);
   
   // Background shapes opacity mask for fade on scroll - with ease-out curve
-  const backgroundOpacity = useTransform(progress, [0, 0.8, 1], [1, 0.3, 0.15], { ease: opacityEaseOut });
+  // Starting opacity reduced from 1 to 0.6 for more subtle background
+  const backgroundOpacity = useTransform(progress, [0, 0.8, 1], [0.6, 0.2, 0.1], { ease: opacityEaseOut });
 
   return (
     <section 
       ref={sectionRef}
-      className="hero-section-bg box-border relative flex w-full flex-col items-center gap-[40px] px-[20px] pb-[10px] pt-[120px] sm:gap-[50px] sm:px-[40px] sm:pb-[15px] sm:pt-[130px] md:gap-[60px] md:px-[60px] md:pb-[20px] md:pt-[145px] lg:gap-[80px] lg:px-[80px] lg:pb-[0px] lg:pt-[170px] overflow-hidden mb-[-105px]"
+      className="hero-section-bg box-border relative flex w-full flex-col items-center gap-[40px] px-[20px] pb-[10px] pt-[120px] sm:gap-[50px] sm:px-[40px] sm:pb-[15px] sm:pt-[130px] md:gap-[60px] md:px-[60px] md:pb-[20px] md:pt-[145px] lg:gap-[80px] lg:px-[80px] lg:pb-[0px] lg:pt-[170px] !overflow-visible mb-0 min-[1185px]:mb-[-105px]"
       aria-label="Hero section"
     >
       {/* Noise texture overlay */}
@@ -76,8 +77,12 @@ export default function HeroSection() {
       />
       
       {/* Background Shapes Container - with opacity mask applied to all geometric elements */}
+      {/* PNG uses fixed width matching 1440px viewport design - overflows and gets clipped by viewport */}
+      {/* Hidden below 1185px breakpoint for simplicity */}
+      {/* Outer container: SVG mask for top ellipse + bottom fade */}
+      {/* Inner container: CSS gradient for left/right edge fade (tied to PNG width, not viewport) */}
       <motion.div 
-        className="absolute inset-0 w-full h-full z-0 pointer-events-none select-none overflow-hidden"
+        className="absolute inset-0 w-full h-full z-0 pointer-events-none select-none overflow-visible flex justify-center hidden min-[1185px]:flex"
         style={{ 
           scale: backgroundScale, 
           opacity: backgroundOpacity,
@@ -91,15 +96,25 @@ export default function HeroSection() {
           WebkitMaskRepeat: 'no-repeat',
         }}
       >
-        {/* Static shapes background image */}
-        <div className="absolute bottom-[35px] left-[-13px] w-[calc(100%+13px)]">
+        {/* Static shapes background image - fixed width, centered, with horizontal gradient fade */}
+        <div 
+          className="absolute bottom-[35px]"
+          style={{ 
+            width: '1453px',  // 1440px viewport + 13px overflow (matches original design)
+            left: '50%',
+            transform: 'translateX(-50%)',
+            // Horizontal gradient fade tied to PNG container (not viewport)
+            // Wider fade zone (0-15% and 85-100%) for smoother edge transition
+            maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+          }}
+        >
           <Image
             src="/Static-shapes-3-min.png"
             alt=""
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto"
+            width={1453}
+            height={894}
+            style={{ width: '1453px', height: 'auto' }}
             priority
           />
         </div>
@@ -119,8 +134,9 @@ export default function HeroSection() {
           </p>
       </div>
 
-      {/* Hero Animation - reduced bottom margin for tighter gap */}
-      <div className="relative w-full flex justify-center -mt-[90px] sm:-mt-[110px] md:-mt-[130px] lg:-mt-[150px] mb-[-40px] pointer-events-none z-[2]">
+      {/* Hero Animation - adjusted margins to prevent clipping at smaller viewports */}
+      {/* Below 1185px: reduced negative margins to ensure animation is fully visible */}
+      <div className="relative w-full flex justify-center -mt-[40px] sm:-mt-[60px] md:-mt-[80px] min-[1185px]:-mt-[150px] mb-0 min-[1185px]:mb-[-40px] pointer-events-none z-[2]">
         <HeroScrollAnimation progress={progress} pathProgress={pathProgress} shapesProgress={shapesProgress} />
       </div>
     </section>

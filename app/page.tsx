@@ -16,10 +16,10 @@ import DividerSection from "@/components/DividerSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0e1f]">
+    <div className="min-h-screen bg-[#0a0e1f] overflow-x-clip">
       <Header />
       
-      <main>
+      <main className="overflow-visible">
         {/* Hero Section */}
         <HeroSection />
         

@@ -29,11 +29,11 @@ export default function VideoShowcaseSection({ id }: { id?: string }) {
   return (
     <section
       id={id}
-      className={`relative box-border flex w-full flex-col items-center gap-[40px] ${
+      className={`relative box-border flex w-full flex-col items-center ${
         id === 'content-showcase-problems-2' 
           ? 'border-x border-t border-solid border-[#3f4367]' 
           : 'border border-solid border-[#3f4367]'
-      } bg-[#171c39] px-[20px] py-[40px] sm:px-[40px] sm:py-[50px] md:px-[60px] md:py-[60px] lg:flex-row lg:gap-[80px] lg:px-[80px] lg:py-[80px] overflow-hidden`}
+      } bg-[#171c39] px-[20px] py-[40px] sm:px-[40px] sm:py-[50px] md:px-[60px] md:py-[60px] lg:px-[80px] lg:py-[80px] overflow-hidden`}
       aria-label="Video Showcase"
     >
       {/* Noise texture overlay */}
@@ -49,8 +49,10 @@ export default function VideoShowcaseSection({ id }: { id?: string }) {
         }}
       />
 
+      {/* Content container - centered with max-width */}
+      <div className="relative z-10 w-full max-w-[1280px] flex flex-col items-center gap-[40px] lg:flex-row lg:gap-[80px]">
       {/* Left Column - Media Container */}
-      <div className="relative z-10 w-full shrink-0 lg:flex lg:shrink-0 lg:grow lg:basis-0 lg:flex-row lg:items-center lg:self-stretch">
+      <div className="w-full shrink-0 lg:flex lg:shrink-0 lg:grow lg:basis-0 lg:flex-row lg:items-center lg:self-stretch">
         {id === 'content-showcase-problems' ? (
           <div 
             className="relative h-[400px] w-full overflow-hidden rounded-[5px] border border-solid border-[#3f4367] p-[24px] sm:h-[450px] md:h-[500px] lg:h-full lg:min-h-[400px]"
@@ -119,7 +121,7 @@ export default function VideoShowcaseSection({ id }: { id?: string }) {
       </div>
 
       {/* Right Column - Content */}
-      <div className="relative z-10 w-full shrink-0 lg:flex lg:shrink-0 lg:grow lg:basis-0 lg:flex-col lg:items-start lg:self-stretch">
+      <div className="w-full shrink-0 lg:flex lg:shrink-0 lg:grow lg:basis-0 lg:flex-col lg:items-start lg:self-stretch">
         <div className="box-border flex w-full flex-col gap-[48px] px-0 py-[32px]">
           <div className="flex w-full flex-col gap-[32px]">
             <div className="flex w-full flex-col gap-[28px]">
@@ -203,6 +205,7 @@ export default function VideoShowcaseSection({ id }: { id?: string }) {
             </div>
           )}
         </div>
+      </div>
       </div>
     </section>
   );

@@ -6,7 +6,7 @@ export default function AboutSection() {
   return (
     <section 
       id="about"
-      className="about-section-bg box-border relative flex w-full flex-col items-stretch gap-[40px] px-[20px] pb-[40px] pt-[40px] sm:gap-[50px] sm:px-[40px] sm:pb-[50px] sm:pt-[50px] md:gap-[60px] md:px-[60px] md:pb-[60px] md:pt-[60px] lg:flex-row lg:items-center lg:gap-[80px] lg:px-[80px] lg:pb-[80px] lg:pt-[80px] overflow-hidden"
+      className="about-section-bg box-border relative flex w-full flex-col items-center px-[20px] pb-[40px] pt-[40px] sm:px-[40px] sm:pb-[50px] sm:pt-[50px] md:px-[60px] md:pb-[60px] md:pt-[60px] lg:px-[80px] lg:pb-[80px] lg:pt-[80px] overflow-hidden"
       aria-label="About section"
     >
       {/* Noise texture overlay */}
@@ -21,8 +21,10 @@ export default function AboutSection() {
           opacity: 0.65,
         }}
       />
+      {/* Content container - centered with max-width */}
+      <div className="relative z-10 w-full max-w-[1280px] flex flex-col items-stretch gap-[40px] sm:gap-[50px] md:gap-[60px] lg:flex-row lg:items-center lg:gap-[80px]">
       {/* Left Column - Content */}
-      <div className="relative z-10 box-border flex w-full shrink-0 flex-col items-start gap-[32px] px-0 py-[16px] sm:gap-[40px] sm:py-[20px] md:gap-[48px] md:py-[24px] lg:min-h-px lg:min-w-px lg:grow lg:basis-0 lg:gap-[64px] lg:py-[32px]">
+      <div className="box-border flex w-full shrink-0 flex-col items-start gap-[32px] px-0 py-[16px] sm:gap-[40px] sm:py-[20px] md:gap-[48px] md:py-[24px] lg:min-h-px lg:min-w-px lg:grow lg:basis-0 lg:gap-[64px] lg:py-[32px]">
         {/* Section Text */}
         <div className="relative flex w-full shrink-0 flex-col items-start gap-[24px] sm:gap-[32px] md:gap-[40px] lg:gap-[48px]">
           {/* Top - Heading */}
@@ -125,7 +127,7 @@ export default function AboutSection() {
       </div>
       
       {/* Right Column - Media Container */}
-      <div className="relative z-10 w-full shrink-0 lg:flex lg:shrink-0 lg:grow lg:basis-0 lg:flex-row lg:items-center lg:self-stretch">
+      <div className="w-full shrink-0 lg:flex lg:shrink-0 lg:grow lg:basis-0 lg:flex-row lg:items-center lg:self-stretch">
         <div 
           className="dot-pattern-bg relative w-full overflow-hidden rounded-[5px] border border-solid border-[#3f4367] p-[24px]"
           style={{ aspectRatio: '625 / 420' }}
@@ -145,6 +147,7 @@ export default function AboutSection() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
