@@ -17,6 +17,7 @@ export default function HeroAnimationSection() {
 
   const smoothEase = cubicBezier(0.17, 0.67, 0.83, 0.67);
   const softEndEase = cubicBezier(0.35, 0.17, 0.3, 1);
+  const baseFillEase = cubicBezier(0, 0.7, 0.1, 1);
 
   const octagonScale = useTransform(scrollYProgress, [0.1, 0.5], [0.5, 1], { ease: softEndEase });
   const octagonRotate = useTransform(scrollYProgress, [0.1, 0.5], [-90, 0], { ease: softEndEase });
@@ -25,6 +26,7 @@ export default function HeroAnimationSection() {
   const shadowBlur = useTransform(scrollYProgress, [0.1, 0.5], [0, 9], { ease: smoothEase });
   const strokeOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1], { ease: smoothEase });
   const fillOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 0.3], { ease: smoothEase });
+  const baseFillOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0.3, 1], { ease: baseFillEase });
   const pathMaskX = useTransform(scrollYProgress, [0, 1], ['-160%', '-20%']);
 
   // Triangle specific animations with delay (starts at 0.15 progress)
@@ -34,6 +36,7 @@ export default function HeroAnimationSection() {
   const triangleShadowBlur = useTransform(scrollYProgress, [0.28, 0.65], [0, 9], { ease: smoothEase });
   const triangleStrokeOpacity = useTransform(scrollYProgress, [0.38, 0.65], [0, 1], { ease: smoothEase });
   const triangleFillOpacity = useTransform(scrollYProgress, [0.28, 0.65], [0, 0.3], { ease: smoothEase });
+  const triangleBaseFillOpacity = useTransform(scrollYProgress, [0.28, 0.65], [0.3, 1], { ease: baseFillEase });
 
   // Rectangle specific animations with double delay (starts at 0.2 progress)
   const rectangleScale = useTransform(scrollYProgress, [0.5, 0.8], [0.5, 1], { ease: softEndEase });
@@ -41,6 +44,7 @@ export default function HeroAnimationSection() {
   const rectangleShadowBlur = useTransform(scrollYProgress, [0.5, 0.8], [0, 9], { ease: smoothEase });
   const rectangleStrokeOpacity = useTransform(scrollYProgress, [0.6, 0.8], [0, 1], { ease: smoothEase });
   const rectangleFillOpacity = useTransform(scrollYProgress, [0.5, 0.8], [0, 0.3], { ease: smoothEase });
+  const rectangleBaseFillOpacity = useTransform(scrollYProgress, [0.5, 0.8], [0.3, 1], { ease: baseFillEase });
   const sparkleScaleLeft = useTransform(scrollYProgress, [0.75, 0.85, 0.87], [0, 1.25, 1], { ease: smoothEase });
   const sparkleScaleMiddle = useTransform(scrollYProgress, [0.80, 0.9, 0.92], [0, 1.25, 1], { ease: smoothEase });
   const sparkleScaleRight = useTransform(scrollYProgress, [0.85, 0.95, 0.97], [0, 1.25, 1], { ease: smoothEase });
@@ -76,7 +80,7 @@ export default function HeroAnimationSection() {
               rotate: octagonRotate
             }}
           >
-            <HeroOctagon dy={shadowDy} blur={shadowBlur} strokeOpacity={strokeOpacity} fillOpacity={fillOpacity} />
+            <HeroOctagon dy={shadowDy} blur={shadowBlur} strokeOpacity={strokeOpacity} fillOpacity={fillOpacity} baseFillOpacity={baseFillOpacity} />
           </motion.div>
 
           {/* Shape 2: Triangle (middle) */}
@@ -91,7 +95,7 @@ export default function HeroAnimationSection() {
               rotate: triangleRotate
             }}
           >
-            <HeroTriangle dy={triangleShadowDy} blur={triangleShadowBlur} strokeOpacity={triangleStrokeOpacity} fillOpacity={triangleFillOpacity} />
+            <HeroTriangle dy={triangleShadowDy} blur={triangleShadowBlur} strokeOpacity={triangleStrokeOpacity} fillOpacity={triangleFillOpacity} baseFillOpacity={triangleBaseFillOpacity} />
           </motion.div>
 
           {/* Shape 3: Rectangle (right) */}
@@ -105,7 +109,7 @@ export default function HeroAnimationSection() {
               scale: rectangleScale
             }}
           >
-            <HeroRectangle dy={rectangleShadowDy} blur={rectangleShadowBlur} strokeOpacity={rectangleStrokeOpacity} fillOpacity={rectangleFillOpacity} />
+            <HeroRectangle dy={rectangleShadowDy} blur={rectangleShadowBlur} strokeOpacity={rectangleStrokeOpacity} fillOpacity={rectangleFillOpacity} baseFillOpacity={rectangleBaseFillOpacity} />
           </motion.div>
         </div>
 
