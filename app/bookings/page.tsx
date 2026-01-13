@@ -18,7 +18,7 @@ export default function BookingsPage() {
     // Cal.com embed initialization (following official docs pattern)
     // Step 1: Initialize the Cal namespace before loading the script
     (function (C, A, L) {
-      const p = function (a: unknown, ar: unknown) {
+      const p = function (a: { q: unknown[] }, ar: unknown) {
         a.q.push(ar);
       };
       const d = C.document;
