@@ -6,6 +6,9 @@ import { useEffect, useRef, useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+// CalApi type from types/cal.d.ts
+type CalApi = NonNullable<typeof window.Cal>;
+
 export default function BookingsPage() {
   const embedRef = useRef<HTMLDivElement>(null);
   const [isCalendarLoading, setIsCalendarLoading] = useState(true);
@@ -15,66 +18,58 @@ export default function BookingsPage() {
     if (calInitialized.current) return;
     calInitialized.current = true;
 
-    // Cal.com embed initialization (following official docs pattern)
-    // Step 1: Initialize the Cal namespace before loading the script
-    (function (C, A, L) {
-      const p = function (a: { q: unknown[] }, ar: unknown) {
-        a.q.push(ar);
+    // Cal.com embed initialization (official pattern)
+    (function (C: Window, A: string, L: string) {
+      const p = function (a: CalApi, ar: unknown[]) {
+        if (a.q) a.q.push(ar);
       };
       const d = C.document;
+      
       C.Cal = C.Cal || function (...args: unknown[]) {
-        const cal = C.Cal;
-        // @ts-expect-error - Cal.com embed pattern
+        const cal = C.Cal as CalApi;
         if (!cal.loaded) {
-          // @ts-expect-error - Cal.com embed pattern
           cal.ns = {};
-          // @ts-expect-error - Cal.com embed pattern
           cal.q = cal.q || [];
           d.head.appendChild(d.createElement('script')).src = A;
-          // @ts-expect-error - Cal.com embed pattern
           cal.loaded = true;
         }
-        // @ts-expect-error - Cal.com embed pattern
         if (args[0] === L) {
-          // @ts-expect-error - Cal.com embed pattern
-          const api = function (...apiArgs: unknown[]) {
-            // @ts-expect-error - Cal.com embed pattern
+          const api: CalApi = function (...apiArgs: unknown[]) {
             p(api, apiArgs);
           };
           const namespace = args[1];
-          // @ts-expect-error - Cal.com embed pattern
           api.q = api.q || [];
-          // @ts-expect-error - Cal.com embed pattern
-          if (typeof namespace === 'string') { cal.ns[namespace] = api; return api; }
+          if (typeof namespace === 'string' && cal.ns) {
+            cal.ns[namespace] = api;
+            return api;
+          }
           return;
         }
-        // @ts-expect-error - Cal.com embed pattern
         p(cal, args);
       };
     })(window, 'https://app.cal.com/embed/embed.js', 'init');
 
-    // Step 2: Initialize Cal.com
-    // @ts-expect-error - Cal.com embed
-    Cal('init', { origin: 'https://app.cal.com' });
+    // Initialize Cal.com
+    if (window.Cal) {
+      window.Cal('init', { origin: 'https://app.cal.com' });
 
-    // Step 3: Create the inline embed
-    // @ts-expect-error - Cal.com embed
-    Cal('inline', {
-      elementOrSelector: '#cal-embed',
-      calLink: 'mike-kosorukov/25min',
-      layout: 'month_view',
-      config: {
+      // Create the inline embed
+      window.Cal('inline', {
+        elementOrSelector: '#cal-embed',
+        calLink: 'mike-kosorukov/25min',
+        layout: 'month_view',
+        config: {
+          theme: 'dark',
+        }
+      });
+
+      // Configure UI
+      window.Cal('ui', {
         theme: 'dark',
-      }
-    });
-
-    // Step 4: Configure UI
-    // @ts-expect-error - Cal.com embed
-    Cal('ui', {
-      theme: 'dark',
-      hideEventTypeDetails: false,
-      layout: 'month_view',
-    });
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+    }
 
     // Hide loading indicator after a delay
     const timer = setTimeout(() => {
