@@ -43,13 +43,13 @@ export default function AboutSection() {
               className="relative w-full shrink-0 font-normal leading-[1.4] text-[#a5aee9]"
               style={{ fontSize: 'clamp(14px, 1.4vw, 18px)', fontVariationSettings: "'wdth' 100" }}
             >
-              I’m Mike, founder of MKG Labs. My GTM path began as the first hire at an early-stage startup, spending months trying to sell a product nobody wanted — something Y Combinator eventually forced us to see. That experience fundamentally changed how I think about startup growth: market–product fit (yes, it starts with the market) and customer behavior have been the lens I use to make high-impact decisions ever since.
+              I'm Mike, founder of MKG Labs. My GTM path started as the first hire at an early-stage startup, where I spent months trying to sell a product nobody wanted—something Y Combinator eventually forced us to confront. That experience reshaped how I think about growth and GTM: market reality and customer behavior have guided my decisions ever since.
             </p>
             <p 
               className="relative w-full shrink-0 font-normal leading-[1.4] text-[#a5aee9]"
               style={{ fontSize: 'clamp(14px, 1.4vw, 18px)', fontVariationSettings: "'wdth' 100" }}
             >
-              For the past seven years, I’ve worked with B2B and prosumer tech founders as a full-time operator, fractional lead, and advisor. MKG Labs is where that experience comes together to help founders bring their tech products to market with clarity and impact.
+              For the past seven years, I've worked with B2B and prosumer tech founders and teams as a full-time operator, fractional lead, and advisor. MKG Labs is where that experience comes together to help bring tech products to market with clarity and impact.
             </p>
           </div>
         </div>
@@ -126,25 +126,34 @@ export default function AboutSection() {
         </div>
       </div>
       
-      {/* Right Column - Media Container */}
+      {/* Right Column - Photo Container */}
       <div className="w-full shrink-0 lg:flex lg:shrink-0 lg:grow lg:basis-0 lg:flex-row lg:items-center lg:self-stretch">
         <div 
-          className="dot-pattern-bg relative w-full overflow-hidden rounded-[5px] border border-solid border-[#3f4367] p-[24px]"
-          style={{ aspectRatio: '625 / 420' }}
+          className="relative w-full overflow-hidden rounded-[5px] border border-solid border-[#3f4367] p-[24px]"
+          style={{ aspectRatio: '1 / 1' }}
         >
-          {/* Inner container with lavender background */}
-          <div className="media-inner-container relative z-10 flex h-full w-full flex-col items-center justify-center gap-[10px] overflow-clip rounded-[5px] bg-[#ccd0ee]">
-            {/* Play Circle Icon */}
-            <div className="play-icon-container relative h-[96px] w-[96px] shrink-0 overflow-clip">
-              <div className="absolute inset-[8.33%]">
-                <Image
-                  src="/play-circle-icon.svg"
-                  alt="Play video"
-                  fill
-                  className="block max-w-none"
-                />
-              </div>
-            </div>
+          {/* Dot pattern background - static */}
+          <div 
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0"
+            style={{
+              backgroundImage: "url('/Dots-Pattern-2.svg')",
+              backgroundRepeat: 'repeat',
+              backgroundSize: '200px 200px',
+              opacity: 0.15,
+            }}
+          />
+          {/* Photo container */}
+          <div 
+            className="relative z-10 flex h-full w-full items-center justify-center overflow-clip rounded-[5px] border border-solid border-[#3f4367]"
+            style={{ boxShadow: '0 0 6px 0 rgba(5, 9, 32, 0.9)' }}
+          >
+            <Image
+              src="/About_photo.png"
+              alt="Mike Kosorukov"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </div>
